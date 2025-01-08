@@ -8,6 +8,8 @@ import numpy as np
 import sys
 from PIL import Image
 
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
 # Define the CNN
 class PornDetector(nn.Module):
     def __init__(self):
@@ -43,7 +45,7 @@ class PornDetector(nn.Module):
 # Amongus
 torch.set_num_threads(12)
 
-model = PornDetector()
+model = PornDetector().to(device)
 model = torch.jit.script(model)
 
 transform = transforms.Compose([
@@ -75,6 +77,8 @@ def train():
     for epoch in range(num_epochs):
         for images, target in dataloader:
             # Forward pass
+            images = images.to(device)
+            target = target.to(device)
             outputs = model(images)
             loss = criterion(outputs, target.unsqueeze(1).float())
 
@@ -101,6 +105,7 @@ def detect(image_path):
     image = Image.open(image_path).convert('RGB')
     image = transform(image)
     image = image.unsqueeze(0)
+    image = image.to(device)
     output = model(image)
     return output
 
@@ -110,5 +115,5 @@ if __name__ == '__main__':
     #perc = detect( sys.argv[1] ).item() * 100
     #print("Detected","Porn." if perc > 50 else "No Porn.", f"Confidence: {perc if perc > 50 else 100 - perc:.2f}%")
 
-    load()
+    #load()
     train()
