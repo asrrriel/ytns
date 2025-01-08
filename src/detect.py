@@ -112,9 +112,14 @@ def detect(image_path):
 
 
 if __name__ == '__main__':
-    load()
-    perc = detect( sys.argv[1] ).item() * 100
-    print("Detected","Porn." if perc > 50 else "No Porn.", f"Confidence: {perc if perc > 50 else 100 - perc:.2f}%")
-
-    #load()
-    #train()
+    if sys.argv[1] == "detect":
+        load()
+        perc = detect( sys.argv[2] ).item() * 100
+        print("Detected","Porn." if perc > 50 else "No Porn.", f"Confidence: {perc if perc > 50 else 100 - perc:.2f}%")
+    elif sys.argv[1] == "train":
+        load()
+        train()
+    elif sys.argv[1] == "trainnew":
+        train()
+    else:
+        print("Now we have commands: detect, train, trainnew!")
