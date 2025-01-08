@@ -10,6 +10,7 @@ from PIL import Image
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
+
 # Define the CNN
 class PornDetector(nn.Module):
     def __init__(self):
@@ -54,7 +55,7 @@ transform = transforms.Compose([
 ])
 
 def load():
-    model.load_state_dict(torch.load('models/detect.pth',weights_only=True))
+    model.load_state_dict(torch.load('models/detect.pth',weights_only=True, map_location=torch.device(device)))
 
 
 def train():
@@ -111,9 +112,9 @@ def detect(image_path):
 
 
 if __name__ == '__main__':
-    #load()
-    #perc = detect( sys.argv[1] ).item() * 100
-    #print("Detected","Porn." if perc > 50 else "No Porn.", f"Confidence: {perc if perc > 50 else 100 - perc:.2f}%")
+    load()
+    perc = detect( sys.argv[1] ).item() * 100
+    print("Detected","Porn." if perc > 50 else "No Porn.", f"Confidence: {perc if perc > 50 else 100 - perc:.2f}%")
 
     #load()
-    train()
+    #train()
