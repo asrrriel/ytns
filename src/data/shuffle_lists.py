@@ -1,7 +1,6 @@
 import os
 import random
 
-
 def shuffle(list_path):
     with open(list_path, 'r') as f:
         lines = f.readlines()

@@ -56,14 +56,11 @@ transform = transforms.Compose([
 def load():
     model.load_state_dict(torch.load('models/detect.pth',weights_only=True, map_location=torch.device(device)))
 
-
 def train():
     dataset = datasets.ImageFolder(root="data", transform=transform)
+    dataloader = DataLoader(dataset, batch_size=16, shuffle=True,num_workers=12)
 
-    dataloader = DataLoader(dataset, batch_size=32, shuffle=True,num_workers=12)
-
-    # Hyperparameters
-    batch_size = 64
+    # Hyperparametersó
     learning_rate = 0.001
     num_epochs = 10000000
 
@@ -87,6 +84,8 @@ def train():
             loss.backward()
             optimizer.step()
 
+            print(f"step ???/???, loss: {loss.item()}")
+
             av_loss += loss.item()
             av_loss_div += 1
 
@@ -95,11 +94,11 @@ def train():
         #av_loss = 0
         #av_loss_div = 0
 
-        if(epoch % 20 == 0):
+        if(epoch % 2 == 0):
             print("Autosave go brr!!!")
             torch.save(model.state_dict(), 'models/detect.pth')
 
-    torch.save(model.state_dict(), 'models/detect.pth')
+    torch.save(model.state_dict(), 'models/detect.pth'))
 
 
 def detect(image_path):
