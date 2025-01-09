@@ -98,7 +98,7 @@ def train():
             print("Autosave go brr!!!")
             torch.save(model.state_dict(), 'models/detect.pth')
 
-    torch.save(model.state_dict(), 'models/detect.pth'))
+    torch.save(model.state_dict(), 'models/detect.pth')
 
 
 def detect(image_path):
