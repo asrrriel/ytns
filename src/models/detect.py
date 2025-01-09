@@ -42,7 +42,6 @@ class PornDetector(nn.Module):
         x = self.conv_layers(x)
         x = self.fc_layers(x)
         return x
-
 # Amongus
 torch.set_num_threads(12)
 
@@ -102,6 +101,7 @@ def train():
 
     torch.save(model.state_dict(), 'models/detect.pth')
 
+
 def detect(image_path):
     image = Image.open(image_path).convert('RGB')
     image = transform(image)
@@ -109,7 +109,6 @@ def detect(image_path):
     image = image.to(device)
     output = model(image)
     return output
-
 
 if __name__ == '__main__':
     if sys.argv[1] == "detect":
