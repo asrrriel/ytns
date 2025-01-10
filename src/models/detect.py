@@ -31,15 +31,29 @@ class PornDetector(nn.Module):
             nn.Conv2d(32, 32, kernel_size=4),
             nn.ReLU(),
             nn.MaxPool2d(kernel_size=2, stride=2),
+
+            nn.Conv2d(32, 32, kernel_size=4),
+            nn.ReLU(),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+
+            nn.Conv2d(32, 32, kernel_size=4),
+            nn.ReLU(),
+            nn.MaxPool2d(kernel_size=2, stride=2),
         )
 
         self.fc_layers = nn.Sequential(
             nn.Flatten(),
-            nn.Linear(32 * 31 * 31, 128),
+            nn.Linear(800, 128),
             nn.ReLU(),
-            nn.Linear(128, 64),
+            nn.Linear(128, 128),
             nn.ReLU(),
-            nn.Linear(64, 16),
+            nn.Linear(128, 128),
+            nn.ReLU(),
+            nn.Linear(128, 128),
+            nn.ReLU(),
+            nn.Linear(128, 128),
+            nn.ReLU(),
+            nn.Linear(128, 16),
             nn.ReLU(),
             nn.Linear(16, 4),
             nn.ReLU(),
