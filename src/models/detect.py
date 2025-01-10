@@ -16,11 +16,19 @@ class PornDetector(nn.Module):
     def __init__(self):
         super(PornDetector, self).__init__()
         self.conv_layers = nn.Sequential(
-            nn.Conv2d(3, 16, kernel_size=4, stride=1, padding=1),
+            nn.Conv2d(3, 16, kernel_size=4),
             nn.ReLU(),
             nn.MaxPool2d(kernel_size=2, stride=2),
 
-            nn.Conv2d(16, 32, kernel_size=4, stride=1, padding=1),
+            nn.Conv2d(16, 32, kernel_size=4),
+            nn.ReLU(),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+
+            nn.Conv2d(32, 32, kernel_size=4),
+            nn.ReLU(),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+
+            nn.Conv2d(32, 32, kernel_size=4),
             nn.ReLU(),
             nn.MaxPool2d(kernel_size=2, stride=2),
         )
@@ -49,7 +57,7 @@ model = PornDetector().to(device)
 model = torch.jit.script(model)
 
 transform = transforms.Compose([
-    transforms.Resize((128, 128)),
+    transforms.Resize((512, 512)),
     transforms.ToTensor(),
 ])
 
@@ -60,7 +68,6 @@ def train():
     dataset = datasets.ImageFolder(root="data", transform=transform)
     dataloader = DataLoader(dataset, batch_size=16, shuffle=True,num_workers=12)
 
-    # Hyperparametersó
     learning_rate = 0.001
     num_epochs = 10000000
 

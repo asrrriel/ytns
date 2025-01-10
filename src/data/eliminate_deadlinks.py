@@ -13,9 +13,11 @@ def no_deadlinks(source_file):
             print(f"Checking \"{url}\"")
             try:
                 response = requests.get(url, stream=True,headers={'User-Agent': ua},timeout=5)
-                response.raise_for_status()
+                if response.status_code != 200:
+                    print(f"Error downloading \"{url}\": {response.status_code}")
+                    continue
                 if response.headers['Content-Type'].split('/')[0] == 'image':
-                    print(f"\"{url}\" is good!")
+                    print(f"\"{url}\" is good! headers: {response.headers}")
                     f.write(line)
                 else:
                     print(f"Bad media type: {response.headers['Content-Type']}")
