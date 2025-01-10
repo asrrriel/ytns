@@ -1,6 +1,7 @@
 import os
 import requests
 import random
+from hashlib import sha256
 
 ua = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/37.0.2062.94 Chrome/37.0.2062.94 Safari/537.36"
 
@@ -17,7 +18,14 @@ def no_deadlinks(source_file):
                     print(f"Error downloading \"{url}\": {response.status_code}")
                     continue
                 if response.headers['Content-Type'].split('/')[0] == 'image':
-                    print(f"\"{url}\" is good! headers: {response.headers}")
+                    if url.split('://')[1].split('/')[0] == 'i.imgur.com':
+                        hasher = sha256()
+                        for chunk in response.iter_content(chunk_size=8192):
+                            hasher.update(chunk)
+                        if hasher.hexdigest() == '9b5936f4006146e4e1e9025b474c02863c0b5614132ad40db4b925a10e8bfbb9':
+                            print(f"\"{url}\" is a removed imgur  image!")
+                            continue
+                    print(f"\"{url}\" is good!")
                     f.write(line)
                 else:
                     print(f"Bad media type: {response.headers['Content-Type']}")
