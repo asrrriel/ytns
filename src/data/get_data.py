@@ -29,7 +29,7 @@ def download_images(source_file, destination_dir):
                     continue
 
                 if file_name.split('.')[-1] == '':
-                    print(file_name.split('.')[-1])
+                    file_name += response.headers['Content-Type'].split('/')[1]
 
                 with open(file_path, 'wb') as out_file:
                     for chunk in response.iter_content(chunk_size=8192):
