@@ -60,3 +60,5 @@ def make_data_dirs():
 
 if __name__ == "__main__":
     make_data_dirs()
+    download_images("sources/porn.txt","data/porn")
+    download_images("sources/not_porn.txt","data/not_porn")
