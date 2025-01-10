@@ -58,6 +58,7 @@ class PornDetector(nn.Module):
             nn.Linear(16, 4),
             nn.ReLU(),
             nn.Linear(4, 1),
+            nn.Sigmoid()
         )
 
     def forward(self, x):
