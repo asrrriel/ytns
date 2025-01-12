@@ -69,7 +69,7 @@ def train():
     dataset = datasets.ImageFolder(root="data", transform=transform)
     dataloader = DataLoader(dataset, batch_size=16, shuffle=True,num_workers=12)
 
-    learning_rate = 0.001
+    learning_rate = 0.0001
     num_epochs = 10000000
 
     criterion = nn.MSELoss()
