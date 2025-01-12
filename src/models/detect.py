@@ -60,6 +60,7 @@ model = torch.jit.script(model)
 transform = transforms.Compose([
     transforms.Resize((512, 512)),
     transforms.ToTensor(),
+    transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
 ])
 
 def load():
@@ -98,9 +99,6 @@ def train():
             av_loss_div += 1
 
         print(f"Epoch [{epoch+1}/{num_epochs}],Average Loss: {av_loss / av_loss_div:.20f}")
-
-        #av_loss = 0
-        #av_loss_div = 0
 
         if(epoch % 2 == 0):
             print("Autosave go brr!!!")

@@ -23,14 +23,14 @@ def no_deadlinks(source_file):
                         for chunk in response.iter_content(chunk_size=8192):
                             hasher.update(chunk)
                         if hasher.hexdigest() == '9b5936f4006146e4e1e9025b474c02863c0b5614132ad40db4b925a10e8bfbb9':
-                            print(f"\"{url}\" is a removed imgur  image!")
+                            print(f"\"{url}\" is a removed imgur image!")
                             continue
                     if url.split('://')[1].split('/')[0] == 'vidble.com':
                         hasher = sha256()
                         for chunk in response.iter_content(chunk_size=8192):
                             hasher.update(chunk)
                         if hasher.hexdigest() == '857c6c5db7854e52f7a2ddbbf80d288843dbff22e2c24fbe0456e71865542ac4':
-                            print(f"\"{url}\" is a removed imgur  image!")
+                            print(f"\"{url}\" is a removed vidble image!")
                             continue
                     print(f"\"{url}\" is good!")
                     f.write(line)
