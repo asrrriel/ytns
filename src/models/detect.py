@@ -10,48 +10,34 @@ from PIL import Image
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-
 # Define the CNN
 class PornDetector(nn.Module):
     def __init__(self):
         super(PornDetector, self).__init__()
         self.conv_layers = nn.Sequential(
-            nn.Conv2d(3, 16, kernel_size=4),
+            nn.Conv2d(3, 16, kernel_size=16),
             nn.ReLU(),
             nn.MaxPool2d(kernel_size=2, stride=2),
-
-            nn.Conv2d(16, 32, kernel_size=4),
+            nn.Conv2d(16, 32, kernel_size=16),
             nn.ReLU(),
             nn.MaxPool2d(kernel_size=2, stride=2),
-
             nn.Conv2d(32, 32, kernel_size=4),
             nn.ReLU(),
             nn.MaxPool2d(kernel_size=2, stride=2),
-
-            nn.Conv2d(32, 32, kernel_size=4),
-            nn.ReLU(),
-            nn.MaxPool2d(kernel_size=2, stride=2),
-
-            nn.Conv2d(32, 32, kernel_size=4),
-            nn.ReLU(),
-            nn.MaxPool2d(kernel_size=2, stride=2),
-
-            nn.Conv2d(32, 32, kernel_size=4),
+            nn.Conv2d(32, 16, kernel_size=4),
             nn.ReLU(),
             nn.MaxPool2d(kernel_size=2, stride=2),
         )
 
         self.fc_layers = nn.Sequential(
             nn.Flatten(),
-            nn.Linear(800, 128),
+            nn.Linear(10816, 1936),
             nn.ReLU(),
-            nn.Linear(128, 128),
+            nn.Linear(1936, 256),
             nn.ReLU(),
-            nn.Linear(128, 128),
+            nn.Linear(256, 256),
             nn.ReLU(),
-            nn.Linear(128, 128),
-            nn.ReLU(),
-            nn.Linear(128, 128),
+            nn.Linear(256, 128),
             nn.ReLU(),
             nn.Linear(128, 16),
             nn.ReLU(),
@@ -83,7 +69,7 @@ def train():
     dataset = datasets.ImageFolder(root="data", transform=transform)
     dataloader = DataLoader(dataset, batch_size=16, shuffle=True,num_workers=12)
 
-    learning_rate = 0.001
+    learning_rate = 0.01
     num_epochs = 10000000
 
     criterion = nn.MSELoss()
