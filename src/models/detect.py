@@ -72,7 +72,7 @@ def train():
     learning_rate = 0.0001
     num_epochs = 10000000
 
-    criterion = nn.MSELoss()
+    criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=learning_rate)
 
     av_loss = 0
